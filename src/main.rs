@@ -1,6 +1,8 @@
 use std::io;
 
 mod core;
+mod domain;
+mod application;
 
 use crate::core::main_loop::MainLoop as Loop;
 
