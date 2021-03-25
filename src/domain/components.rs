@@ -1,3 +1,4 @@
 pub mod component;
 
-pub mod movement;
+pub mod position;
+pub mod orientation;

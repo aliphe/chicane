@@ -1,7 +1,9 @@
+#[derive(Debug, PartialEq, Eq, Hash)]
 pub enum ComponentType {
-  Movement,
+    Position,
+    Orientation,
 }
 
 pub trait Component {
-  fn getIdentifier(&self) -> ComponentType;
+    fn get_identifier(&self) -> ComponentType;
 }

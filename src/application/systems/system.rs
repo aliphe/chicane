@@ -1,7 +1,3 @@
-use crate::domain::components::component::Component;
-
-pub trait System<Selector> where Selector: Component {
+pub trait System {
   fn tick(&self) -> Result<(), String>;
-
-  fn registerComponents(&self) -> ();
 }

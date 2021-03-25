@@ -1,37 +1,29 @@
-use std::io;
+use application::entities_repository::{
+    entities_repository::EntitiesRepository, memory_entities_repository::MemoryEntitiesRepository,
+};
+use domain::components::{
+    component::Component, orientation::OrientationComponent, position::PositionComponent,
+};
 
+mod application;
 mod core;
 mod domain;
-mod application;
-
-use crate::core::main_loop::MainLoop as Loop;
-
-struct InputLoop {
-    iteration: i32,
-}
-
-impl Loop for InputLoop {
-    fn next(&mut self) -> bool {
-        let mut input = String::new();
-
-        io::stdin()
-            .read_line(&mut input)
-            .expect("Failed to get input");
-
-        self.iteration -= 1;
-
-        if self.iteration > 0 {
-            return true;
-        }
-        return false;
-    }
-}
 
 fn main() {
-    println!("Hello, world!");
+    let mut a = MemoryEntitiesRepository::new();
 
-    let mut main_loop = InputLoop { iteration: 10 };
-    while main_loop.next() == true {
-        println!("Next step")
+    let mut components: Vec<Box<dyn Component>> = Vec::new();
+
+    components.push(Box::new(OrientationComponent { orientation: 12.0 }));
+    components.push(Box::new(PositionComponent { x: 0, y: 0, z: 0 }));
+
+    a.register_entity(String::from("car"), components);
+
+    let stored_components = a.retrieve_entity_by_id(&String::from("car"));
+    match stored_components {
+        Some(comps) => {
+            println!("{}", comps.len())
+        }
+        _ => (),
     }
 }
