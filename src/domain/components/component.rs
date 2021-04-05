@@ -2,6 +2,7 @@
 pub enum ComponentType {
     Position,
     Orientation,
+    Speed,
 }
 
 pub trait Component {

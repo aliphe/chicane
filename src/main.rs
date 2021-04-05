@@ -1,9 +1,7 @@
 use application::entities_repository::{
     entities_repository::EntitiesRepository, memory_entities_repository::MemoryEntitiesRepository,
 };
-use domain::components::{
-    component::Component, orientation::OrientationComponent, position::PositionComponent,
-};
+use domain::components::{component::{Component, ComponentType}, orientation::OrientationComponent, position::PositionComponent, speed::{SpeedComponent}};
 
 mod application;
 mod core;
@@ -16,13 +14,18 @@ fn main() {
 
     components.push(Box::new(OrientationComponent { orientation: 12.0 }));
     components.push(Box::new(PositionComponent { x: 0, y: 0, z: 0 }));
+    components.push(Box::new(SpeedComponent{ speed: 387.32}));
 
     a.register_entity(String::from("car"), components);
 
     let stored_components = a.retrieve_entity_by_id(&String::from("car"));
     match stored_components {
         Some(comps) => {
-            println!("{}", comps.len())
+            let identifiers: Vec<ComponentType> = comps.into_iter().map(|c| {
+                c.as_ref().get_identifier()
+            }).collect();
+
+            println!("This entity is defined by the following components {:#?}", identifiers)
         }
         _ => (),
     }
