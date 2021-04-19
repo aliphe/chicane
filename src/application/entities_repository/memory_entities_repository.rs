@@ -37,10 +37,17 @@ impl EntitiesRepository for MemoryEntitiesRepository {
     }
 
     fn retrieve_entity_by_id(&self, entity_id: &String) -> Option<&Vec<Box<dyn Component>>> {
-        self.entities_components.get(entity_id).clone()
+        self.entities_components.get(entity_id)
     }
 
-    fn retrieve_entities_by_components(&self, components: Vec<ComponentType>) -> Vec<String> {
+    fn retrieve_entity_by_id_mut(
+        &mut self,
+        entity_id: &String,
+    ) -> Option<&mut Vec<Box<dyn Component>>> {
+        self.entities_components.get_mut(entity_id)
+    }
+
+    fn retrieve_entities_by_components(&self, components: &Vec<ComponentType>) -> Vec<String> {
         self.entities_components
             .iter()
             .filter_map(|(key, val)| {
@@ -57,6 +64,46 @@ impl EntitiesRepository for MemoryEntitiesRepository {
                 None
             })
             .collect()
+    }
+
+    fn retrieve_entity_component(
+        &self,
+        entity_id: &String,
+        component_type: &ComponentType,
+    ) -> Option<&dyn Component> {
+        let entity_search = self.retrieve_entity_by_id(entity_id);
+        match entity_search {
+            Some(components) => {
+                let found_comp = components
+                    .iter()
+                    .find(|c| &c.get_identifier() == component_type);
+                if let Some(val) = found_comp {
+                    return Some(val.as_ref())
+                }
+                None
+            }
+            None => None,
+        }
+    }
+
+    fn retrieve_entity_component_mut(
+        &mut self,
+        entity_id: &String,
+        component_type: &ComponentType,
+    ) -> Option<&mut dyn Component> {
+        let entity_search = self.retrieve_entity_by_id_mut(entity_id);
+        match entity_search {
+            Some(components) => {
+                let found_comp = components
+                    .iter_mut()
+                    .find(|c| &c.get_identifier() == component_type);
+                if let Some(val) = found_comp {
+                    return Some(val.as_mut())
+                }
+                None
+            }
+            None => None,
+        }
     }
 }
 
@@ -98,19 +145,30 @@ mod tests {
         let mut entities_components: HashMap<String, Vec<Box<dyn Component>>> = HashMap::new();
         entities_components.insert(
             String::from("Car"),
-            vec![Box::new(PositionComponent { x: 0, y: 2, z: 2 })],
+            vec![Box::new(PositionComponent {
+                x: 0.0,
+                y: 2.0,
+                z: 2.0,
+            })],
         );
-        let repository = MemoryEntitiesRepository {
+        let mut repository = MemoryEntitiesRepository {
             entities_components,
             entities_per_components: HashMap::new(),
         };
 
-        let components = repository.retrieve_entity_by_id(&String::from("Car"));
+        let components = repository.retrieve_entity_by_id_mut(&String::from("Car"));
         match components {
             Some(comps) => assert!(
                 comps
                     .iter()
-                    .zip(vec![Box::new(PositionComponent { x: 0, y: 2, z: 2 })].iter())
+                    .zip(
+                        vec![Box::new(PositionComponent {
+                            x: 0.0,
+                            y: 2.0,
+                            z: 2.0
+                        })]
+                        .iter()
+                    )
                     .all(|(a, b)| a.get_identifier() == b.get_identifier()),
                 "Arrays are not equal"
             ),
@@ -124,7 +182,11 @@ mod tests {
         entities_components.insert(
             String::from("Car"),
             vec![
-                Box::new(PositionComponent { x: 0, y: 2, z: 2 }),
+                Box::new(PositionComponent {
+                    x: 0.0,
+                    y: 2.0,
+                    z: 2.0,
+                }),
                 Box::new(OrientationComponent { orientation: 90.0 }),
                 Box::new(SpeedComponent { speed: 123.0 }),
             ],
@@ -140,7 +202,7 @@ mod tests {
             entities_per_components,
         };
 
-        let retrieved = repository.retrieve_entities_by_components(vec![
+        let retrieved = repository.retrieve_entities_by_components(&vec![
             ComponentType::Position,
             ComponentType::Orientation,
             ComponentType::Speed,
