@@ -3,7 +3,7 @@ use std::any::Any;
 use super::component::{Component, ComponentType};
 #[derive(Clone, Copy)]
 pub struct OrientationComponent {
-    pub orientation: f32, // 0-360
+    pub orientation: f32, // Radiant (0-2Pi)
 }
 
 impl OrientationComponent {}

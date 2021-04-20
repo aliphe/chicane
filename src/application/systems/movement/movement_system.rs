@@ -3,7 +3,10 @@ use crate::{
         entities_repository::entities_repository::EntitiesRepository, systems::system::System,
     },
     domain::components::{
-        component::ComponentType, position::PositionComponent, speed::SpeedComponent,
+        component::{ComponentType},
+        position::PositionComponent,
+        speed::SpeedComponent,
+        orientation::OrientationComponent,
     },
 };
 
@@ -29,14 +32,28 @@ impl MovementSystem {
             .and_then(|speed_component| Some(speed_component))
             .expect("Unable to retrieve speed component");
 
-        let found_pos = entities_repository
+        let orientation_component = *entities_repository
+            .retrieve_entity_component(entity_id, &ComponentType::Orientation)
+            .and_then(|component| component.as_any().downcast_ref::<OrientationComponent>())
+            .and_then(|orientation_component| Some(orientation_component))
+            .expect("Unable to retrieve orientation component");
+
+        let position_component = entities_repository
             .retrieve_entity_component_mut(entity_id, &ComponentType::Position)
             .and_then(|component| component.as_any_mut().downcast_mut::<PositionComponent>())
             .and_then(|position_component| Some(position_component))
-            .expect("Unable to retrieve component");
+            .expect("Unable to retrieve position component");
 
-        println!("Moving entity at {} at speed {}", found_pos.x, speed_component.speed);
-        found_pos.x += speed_component.speed;
+
+        println!(
+            "Moving entity at ({:.2},{:.2}) (orientation {:.2}) at speed {:.2}",
+           position_component.x, 
+           position_component.y, 
+           orientation_component.orientation,
+           speed_component.speed,
+        );
+        position_component.x += speed_component.speed * orientation_component.orientation.cos();
+        position_component.y += speed_component.speed * orientation_component.orientation.sin();
     }
 }
 

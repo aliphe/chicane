@@ -1,3 +1,5 @@
+use std::f32::consts::PI;
+
 use application::{
     entities_repository::{
         entities_repository::EntitiesRepository,
@@ -6,9 +8,7 @@ use application::{
     systems::{movement::movement_system::MovementSystem, system::System},
 };
 use domain::components::{
-    component::{Component},
-    orientation::OrientationComponent,
-    position::PositionComponent,
+    component::Component, orientation::OrientationComponent, position::PositionComponent,
     speed::SpeedComponent,
 };
 
@@ -23,7 +23,9 @@ fn main() {
 
     let movement_system = MovementSystem::new();
 
-    components.push(Box::new(OrientationComponent { orientation: 12.0 }));
+    components.push(Box::new(OrientationComponent {
+        orientation: PI / 2.0,
+    }));
     components.push(Box::new(PositionComponent {
         x: 0.0,
         y: 0.0,
