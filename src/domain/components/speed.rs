@@ -2,6 +2,7 @@ use std::any::Any;
 
 use super::component::{Component, ComponentType};
 
+#[derive(Clone, Copy)]
 pub struct SpeedComponent {
     pub speed: f32,
 }

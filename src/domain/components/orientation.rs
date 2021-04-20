@@ -1,10 +1,12 @@
 use std::any::Any;
 
 use super::component::{Component, ComponentType};
-
+#[derive(Clone, Copy)]
 pub struct OrientationComponent {
     pub orientation: f32, // 0-360
 }
+
+impl OrientationComponent {}
 
 impl Component for OrientationComponent {
     fn as_any(&self) -> &dyn Any {
@@ -18,5 +20,4 @@ impl Component for OrientationComponent {
     fn get_identifier(&self) -> ComponentType {
         ComponentType::Orientation
     }
-
 }

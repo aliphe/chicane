@@ -1,6 +1,6 @@
-use std::collections::HashMap;
+use std::{collections::HashMap};
 
-use crate::domain::components::component::{Component, ComponentType};
+use crate::domain::components::{component::{Component, ComponentType}};
 
 use super::entities_repository::EntitiesRepository;
 

@@ -2,6 +2,7 @@ use std::any::Any;
 
 use super::component::{Component, ComponentType};
 
+#[derive(Clone, Copy)]
 pub struct PositionComponent {
     pub x: f32,
     pub y: f32,
