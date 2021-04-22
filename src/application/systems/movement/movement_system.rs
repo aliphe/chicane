@@ -46,7 +46,7 @@ impl MovementSystem {
 
 
         println!(
-            "Moving entity at ({:.2},{:.2}) (orientation {:.2}) at speed {:.2}",
+            "[MovementComponent ] Moving entity at ({:.2},{:.2}) (orientation {:.2}) at speed {:.2}",
            position_component.x, 
            position_component.y, 
            orientation_component.orientation,
