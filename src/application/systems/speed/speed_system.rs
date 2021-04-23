@@ -28,9 +28,6 @@ impl<'a> SpeedSystem<'a> {
     }
 
     fn new_speed(&self, speed: f32, throttle: f32) -> f32 {
-        let duration = self.engine_settings.get_frames_duration();
-        println!("{}", duration);
-
         // TODO use something like this baby f(x) = 1-(1-200*log(x+1))
         let max_speed = self.physics_settings.get_max_speed();
 
@@ -53,7 +50,6 @@ impl<'a> SpeedSystem<'a> {
             .and_then(|component| component.as_any_mut().downcast_mut::<SpeedComponent>())
             .and_then(|speed_component| Some(speed_component))
             .expect("Unable to retrieve speed component");
-
 
         let new_speed = self.new_speed(speed_component.speed, throttle_component.throttle);
 

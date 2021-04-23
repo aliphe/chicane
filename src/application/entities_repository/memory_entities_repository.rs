@@ -1,6 +1,6 @@
-use std::{collections::HashMap};
+use std::collections::HashMap;
 
-use crate::domain::components::{component::{Component, ComponentType}};
+use crate::domain::components::component::{Component, ComponentType};
 
 use super::entities_repository::EntitiesRepository;
 
@@ -78,7 +78,7 @@ impl EntitiesRepository for MemoryEntitiesRepository {
                     .iter()
                     .find(|c| &c.get_identifier() == component_type);
                 if let Some(val) = found_comp {
-                    return Some(val.as_ref())
+                    return Some(val.as_ref());
                 }
                 None
             }
@@ -98,7 +98,7 @@ impl EntitiesRepository for MemoryEntitiesRepository {
                     .iter_mut()
                     .find(|c| &c.get_identifier() == component_type);
                 if let Some(val) = found_comp {
-                    return Some(val.as_mut())
+                    return Some(val.as_mut());
                 }
                 None
             }

@@ -4,7 +4,7 @@ pub struct EngineSettings {
 
 impl EngineSettings {
     pub fn new() -> EngineSettings {
-        EngineSettings { 
+        EngineSettings {
             frames_per_second: 144,
         }
     }

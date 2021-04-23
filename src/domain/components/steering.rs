@@ -1,16 +1,13 @@
 use std::any::Any;
 
 use super::component::{Component, ComponentType};
-
 #[derive(Clone, Copy)]
-pub struct PositionComponent {
-    pub x: f32,
-    pub y: f32,
-    pub z: f32,
+pub struct SteeringComponent {
+    pub steering: f32, // (-1; 1)
 }
 
-impl Component for PositionComponent {
-    fn as_any(&self) -> &dyn std::any::Any {
+impl Component for SteeringComponent {
+    fn as_any(&self) -> &dyn Any {
         self
     }
 
@@ -19,6 +16,6 @@ impl Component for PositionComponent {
     }
 
     fn get_identifier(&self) -> ComponentType {
-        ComponentType::Position
+        ComponentType::Steering
     }
 }

@@ -3,10 +3,8 @@ use crate::{
         entities_repository::entities_repository::EntitiesRepository, systems::system::System,
     },
     domain::components::{
-        component::{ComponentType},
-        position::PositionComponent,
+        component::ComponentType, orientation::OrientationComponent, position::PositionComponent,
         speed::SpeedComponent,
-        orientation::OrientationComponent,
     },
 };
 
@@ -43,7 +41,6 @@ impl MovementSystem {
             .and_then(|component| component.as_any_mut().downcast_mut::<PositionComponent>())
             .and_then(|position_component| Some(position_component))
             .expect("Unable to retrieve position component");
-
 
         println!(
             "[MovementComponent ] Moving entity at ({:.2},{:.2}) (orientation {:.2}) at speed {:.2}",

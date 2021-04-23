@@ -4,7 +4,7 @@ use super::component::{Component, ComponentType};
 
 #[derive(Clone, Copy)]
 pub struct ThrottleComponent {
-  pub throttle: f32,
+    pub throttle: f32,
 }
 
 impl Component for ThrottleComponent {
@@ -19,5 +19,4 @@ impl Component for ThrottleComponent {
     fn get_identifier(&self) -> ComponentType {
         ComponentType::Throttle
     }
-
 }
