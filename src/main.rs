@@ -7,8 +7,8 @@ use application::{
     },
     settings::{engine_settings::EngineSettings, physics_settings::PhysicsSettings},
     systems::{
-        movement::movement_system::MovementSystem, rotation::rotation_system::RotationSystem,
-        speed::speed_system::SpeedSystem, system::System,
+        movement::MovementSystem, rotation::RotationSystem,
+        speed::SpeedSystem, system::System,
     },
 };
 use domain::components::{
