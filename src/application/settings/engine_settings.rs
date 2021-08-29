@@ -1,11 +1,11 @@
 pub struct EngineSettings {
-    frames_per_second: i16,
+    // frames_per_second: i16,
 }
 
 impl EngineSettings {
     pub fn new() -> EngineSettings {
         EngineSettings {
-            frames_per_second: 144,
+            // frames_per_second: 144,
         }
     }
 
@@ -13,7 +13,7 @@ impl EngineSettings {
     //     self.frames_per_second
     // }
 
-    pub fn get_frames_duration(&self) -> i16 {
-        1 / self.frames_per_second
-    }
+    // pub fn get_frames_duration(&self) -> i16 {
+    //     1 / self.frames_per_second
+    // }
 }

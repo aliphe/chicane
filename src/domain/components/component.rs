@@ -7,6 +7,7 @@ pub enum ComponentType {
     Speed,
     Throttle,
     Steering,
+    Brake,
 }
 
 pub trait Component {

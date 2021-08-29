@@ -1,3 +1,4 @@
+use crate::domain::components::brake::BrakeComponent;
 use std::f32::consts::PI;
 
 use application::{
@@ -42,6 +43,7 @@ fn main() {
     }));
     components.push(Box::new(SpeedComponent { speed: 0.0 }));
     components.push(Box::new(ThrottleComponent { throttle: 1.0 }));
+    components.push(Box::new(BrakeComponent { brake: 0.1 }));
     components.push(Box::new(SteeringComponent { steering: 0.25 }));
 
     repository.register_entity(String::from("car"), components);
