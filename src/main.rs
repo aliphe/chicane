@@ -6,7 +6,7 @@ use application::{
         entities_repository::EntitiesRepository,
         memory_entities_repository::MemoryEntitiesRepository,
     },
-    settings::{engine_settings::EngineSettings, physics_settings::PhysicsSettings},
+    settings::{physics_settings::PhysicsSettings},
     systems::{
         movement::MovementSystem, rotation::RotationSystem,
         speed::SpeedSystem, system::System,
@@ -23,14 +23,13 @@ mod domain;
 
 fn main() {
     // Application-specific
-    let engine_settings = EngineSettings::new();
     let physics_settings = PhysicsSettings::new();
     let mut repository = MemoryEntitiesRepository::new();
 
     // Systems
     let movement_system = MovementSystem::new();
     let rotation_system = RotationSystem::new();
-    let speed_system = SpeedSystem::new(&engine_settings, &physics_settings);
+    let speed_system = SpeedSystem::new(&physics_settings);
 
     let mut components: Vec<Box<dyn Component>> = Vec::new();
     components.push(Box::new(OrientationComponent {
