@@ -19,7 +19,7 @@ impl MemoryEntitiesRepository {
     }
 }
 
-impl EntitiesRepository for MemoryEntitiesRepository {
+impl<'a> EntitiesRepository<'a> for MemoryEntitiesRepository {
     fn register_entity(&mut self, entity_id: String, components: Vec<Box<dyn Component>>) {
         self.entities_components
             .insert(entity_id.clone(), components);
