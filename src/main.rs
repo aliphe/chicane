@@ -1,3 +1,6 @@
+extern crate redis;
+
+use redis::streams::StreamMaxlen;
 use crate::domain::components::brake::BrakeComponent;
 use std::f32::consts::PI;
 
@@ -22,6 +25,20 @@ mod core;
 mod domain;
 
 fn main() {
+    let client = redis::Client::open("redis://127.0.0.1/").expect("Unable to open redis client");
+    let mut con = client.get_connection().expect("Unable to connect to redis database");
+
+    let maxlen = StreamMaxlen::Approx(1000);
+
+    let _ = redis::cmd("ADD").arg("stream").arg("*").arg(1).query::<String>(&mut con).expect("");
+    redis::cmd("ADD").arg("stream").arg("*").arg(1).query::<String>(&mut con).expect("");
+    redis::cmd("ADD").arg("stream").arg("*").arg(1).query::<String>(&mut con).expect("");
+    redis::cmd("ADD").arg("stream").arg("*").arg(1).query::<String>(&mut con).expect("");
+    redis::cmd("ADD").arg("stream").arg("*").arg(1).query::<String>(&mut con).expect("");
+    redis::cmd("ADD").arg("stream").arg("*").arg(1).query::<String>(&mut con).expect("");
+    let a = redis::cmd("LEN").arg("stream").query::<i32>(&mut con);
+    println!("{:?}", a);
+
     // Application-specific
     let physics_settings = PhysicsSettings::new();
     let mut repository = MemoryEntitiesRepository::new();
