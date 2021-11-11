@@ -1,11 +1,11 @@
 use crate::{
-    application::{
-        entities_repository::entities_repository::EntitiesRepository, systems::system::System,
-    },
-    domain::components::{
+    engine::entities_repository::entities_repository::EntitiesRepository,
+    vehicle::components::{
         component::ComponentType, orientation::OrientationComponent, steering::SteeringComponent,
     },
 };
+
+use super::system::System;
 
 pub struct RotationSystem {
     entities_signature: Vec<ComponentType>,

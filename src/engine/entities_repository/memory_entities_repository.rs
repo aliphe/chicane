@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use crate::domain::components::component::{Component, ComponentType};
+use crate::vehicle::components::component::{Component, ComponentType};
 
 use super::entities_repository::EntitiesRepository;
 
@@ -109,11 +109,9 @@ impl<'a> EntitiesRepository<'a> for MemoryEntitiesRepository {
 
 #[cfg(test)]
 mod tests {
-    use orientation::OrientationComponent;
-    use position::PositionComponent;
-    use speed::SpeedComponent;
-
-    use crate::domain::components::*;
+    use crate::vehicle::components::{
+        orientation::OrientationComponent, position::PositionComponent, speed::SpeedComponent,
+    };
 
     use super::*;
 

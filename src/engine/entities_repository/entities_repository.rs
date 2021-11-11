@@ -1,4 +1,4 @@
-use crate::domain::components::component::{Component, ComponentType};
+use crate::vehicle::components::component::{Component, ComponentType};
 
 pub trait EntitiesRepository<'a> {
     fn register_entity(&mut self, entity_id: String, components: Vec<Box<dyn Component>>);
@@ -23,7 +23,7 @@ pub trait EntitiesRepository<'a> {
     ) -> Option<&mut dyn Component>;
 }
 
-pub fn retrieve_entity_component<'a, C : Component + Copy + 'static>(
+pub fn retrieve_entity_component<'a, C: Component + Copy + 'static>(
     entities_repository: &'a dyn EntitiesRepository,
     entity_id: &String,
     component_type: ComponentType,
@@ -35,7 +35,7 @@ pub fn retrieve_entity_component<'a, C : Component + Copy + 'static>(
         .expect("Unable to retrieve component")
 }
 
-pub fn retrieve_entity_component_mut<'a, C : Component + 'static>(
+pub fn retrieve_entity_component_mut<'a, C: Component + 'static>(
     entities_repository: &'a mut dyn EntitiesRepository,
     entity_id: &String,
     component_type: ComponentType,

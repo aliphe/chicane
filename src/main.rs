@@ -1,52 +1,35 @@
 extern crate redis;
 
-use redis::streams::StreamMaxlen;
-use crate::domain::components::brake::BrakeComponent;
 use std::f32::consts::PI;
 
-use application::{
-    entities_repository::{
+use crate::{
+    engine::entities_repository::{
         entities_repository::EntitiesRepository,
         memory_entities_repository::MemoryEntitiesRepository,
     },
-    settings::{physics_settings::PhysicsSettings},
-    systems::{
-        movement::MovementSystem, rotation::RotationSystem,
-        speed::SpeedSystem, system::System,
+    vehicle::{
+        components::{
+            brake::BrakeComponent, component::Component, orientation::OrientationComponent,
+            position::PositionComponent, speed::SpeedComponent, steering::SteeringComponent,
+            throttle::ThrottleComponent,
+        },
+        systems::{
+            movement::MovementSystem, rotation::RotationSystem, speed::SpeedSystem, system::System,
+        },
     },
 };
-use domain::components::{
-    component::Component, orientation::OrientationComponent, position::PositionComponent,
-    speed::SpeedComponent, steering::SteeringComponent, throttle::ThrottleComponent,
-};
 
-mod application;
-mod core;
-mod domain;
+mod engine;
+mod vehicle;
 
 fn main() {
-    let client = redis::Client::open("redis://127.0.0.1/").expect("Unable to open redis client");
-    let mut con = client.get_connection().expect("Unable to connect to redis database");
-
-    let maxlen = StreamMaxlen::Approx(1000);
-
-    let _ = redis::cmd("ADD").arg("stream").arg("*").arg(1).query::<String>(&mut con).expect("");
-    redis::cmd("ADD").arg("stream").arg("*").arg(1).query::<String>(&mut con).expect("");
-    redis::cmd("ADD").arg("stream").arg("*").arg(1).query::<String>(&mut con).expect("");
-    redis::cmd("ADD").arg("stream").arg("*").arg(1).query::<String>(&mut con).expect("");
-    redis::cmd("ADD").arg("stream").arg("*").arg(1).query::<String>(&mut con).expect("");
-    redis::cmd("ADD").arg("stream").arg("*").arg(1).query::<String>(&mut con).expect("");
-    let a = redis::cmd("LEN").arg("stream").query::<i32>(&mut con);
-    println!("{:?}", a);
-
     // Application-specific
-    let physics_settings = PhysicsSettings::new();
     let mut repository = MemoryEntitiesRepository::new();
 
     // Systems
     let movement_system = MovementSystem::new();
     let rotation_system = RotationSystem::new();
-    let speed_system = SpeedSystem::new(&physics_settings);
+    let speed_system = SpeedSystem::new();
 
     let mut components: Vec<Box<dyn Component>> = Vec::new();
     components.push(Box::new(OrientationComponent {
