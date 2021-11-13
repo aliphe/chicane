@@ -1,13 +1,17 @@
 use std::any::Any;
 
-use super::component::{Component, ComponentType};
-#[derive(Clone, Copy)]
+use serde::{Deserialize, Serialize};
+
+use crate::engine::component::{Component, ComponentType};
+
+#[derive(Clone, Copy, Serialize, Deserialize)]
 pub struct OrientationComponent {
     pub orientation: f32, // Radiant (0-2Pi)
 }
 
 impl OrientationComponent {}
 
+#[typetag::serde]
 impl Component for OrientationComponent {
     fn as_any(&self) -> &dyn Any {
         self

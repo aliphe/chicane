@@ -1,14 +1,15 @@
 use crate::{
-    engine::entities_repository::entities_repository::{
-        retrieve_entity_component, retrieve_entity_component_mut, EntitiesRepository,
+    engine::{
+        component::ComponentType,
+        entities_repository::entities_repository::{
+            retrieve_entity_component, retrieve_entity_component_mut, EntitiesRepository,
+        },
+        system::System,
     },
     vehicle::components::{
-        component::ComponentType, orientation::OrientationComponent, position::PositionComponent,
-        speed::SpeedComponent,
+        orientation::OrientationComponent, position::PositionComponent, speed::SpeedComponent,
     },
 };
-
-use super::system::System;
 
 pub struct MovementSystem {
     entities_signature: Vec<ComponentType>,

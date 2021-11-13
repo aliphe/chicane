@@ -1,12 +1,15 @@
 use std::any::Any;
 
-use super::component::{Component, ComponentType};
+use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Copy)]
+use crate::engine::component::{Component, ComponentType};
+
+#[derive(Clone, Copy, Serialize, Deserialize)]
 pub struct SpeedComponent {
     pub speed: f32,
 }
 
+#[typetag::serde]
 impl Component for SpeedComponent {
     fn as_any_mut(&mut self) -> &mut dyn Any {
         self

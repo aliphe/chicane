@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use crate::vehicle::components::component::{Component, ComponentType};
+use crate::engine::component::{Component, ComponentType};
 
 use super::entities_repository::EntitiesRepository;
 

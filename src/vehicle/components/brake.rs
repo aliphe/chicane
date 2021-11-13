@@ -1,12 +1,15 @@
 use std::any::Any;
 
-use super::component::{Component, ComponentType};
+use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Copy)]
+use crate::engine::component::{Component, ComponentType};
+
+#[derive(Clone, Copy, Debug, Serialize, Deserialize)]
 pub struct BrakeComponent {
     pub brake: f32,
 }
 
+#[typetag::serde]
 impl Component for BrakeComponent {
     fn as_any(&self) -> &dyn std::any::Any {
         self

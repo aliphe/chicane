@@ -1,12 +1,15 @@
 use std::any::Any;
 
-use super::component::{Component, ComponentType};
+use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Copy)]
+use crate::engine::component::{Component, ComponentType};
+
+#[derive(Clone, Copy, Serialize, Deserialize)]
 pub struct ThrottleComponent {
     pub throttle: f32,
 }
 
+#[typetag::serde]
 impl Component for ThrottleComponent {
     fn as_any(&self) -> &dyn std::any::Any {
         self

@@ -1,11 +1,15 @@
 use std::any::Any;
 
-use super::component::{Component, ComponentType};
-#[derive(Clone, Copy)]
+use serde::{Deserialize, Serialize};
+
+use crate::engine::component::{Component, ComponentType};
+
+#[derive(Clone, Copy, Serialize, Deserialize)]
 pub struct SteeringComponent {
     pub steering: f32, // (-1; 1)
 }
 
+#[typetag::serde]
 impl Component for SteeringComponent {
     fn as_any(&self) -> &dyn Any {
         self

@@ -1,4 +1,4 @@
-use crate::vehicle::components::component::{Component, ComponentType};
+use crate::engine::component::{Component, ComponentType};
 
 pub trait EntitiesRepository<'a> {
     fn register_entity(&mut self, entity_id: String, components: Vec<Box<dyn Component>>);

@@ -1,14 +1,15 @@
 use crate::{
-    engine::entities_repository::entities_repository::{
-        retrieve_entity_component, retrieve_entity_component_mut, EntitiesRepository,
+    engine::{
+        component::ComponentType,
+        entities_repository::entities_repository::{
+            retrieve_entity_component, retrieve_entity_component_mut, EntitiesRepository,
+        },
+        system::System,
     },
     vehicle::components::{
-        brake::BrakeComponent, component::ComponentType, speed::SpeedComponent,
-        throttle::ThrottleComponent,
+        brake::BrakeComponent, speed::SpeedComponent, throttle::ThrottleComponent,
     },
 };
-
-use super::system::System;
 
 pub struct SpeedSystem {
     entities_signature: Vec<ComponentType>,

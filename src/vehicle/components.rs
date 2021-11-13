@@ -1,5 +1,3 @@
-pub mod component;
-
 pub mod brake;
 pub mod orientation;
 pub mod position;

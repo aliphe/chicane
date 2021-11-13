@@ -1,6 +1,8 @@
 use std::any::Any;
 
-#[derive(Debug, PartialEq, Eq, Hash)]
+use serde::{Deserialize, Serialize};
+
+#[derive(Debug, PartialEq, Eq, Hash, Serialize, Deserialize)]
 pub enum ComponentType {
     Position,
     Orientation,
@@ -10,6 +12,9 @@ pub enum ComponentType {
     Brake,
 }
 
+// impl ToRedisArg for ComponentType {}
+
+#[typetag::serde(tag = "type")]
 pub trait Component {
     fn as_any(&self) -> &dyn Any;
 

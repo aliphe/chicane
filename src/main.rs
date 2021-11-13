@@ -2,6 +2,8 @@ extern crate redis;
 
 use std::f32::consts::PI;
 
+use engine::{component::Component, system::System};
+
 use crate::{
     engine::entities_repository::{
         entities_repository::EntitiesRepository,
@@ -9,13 +11,10 @@ use crate::{
     },
     vehicle::{
         components::{
-            brake::BrakeComponent, component::Component, orientation::OrientationComponent,
-            position::PositionComponent, speed::SpeedComponent, steering::SteeringComponent,
-            throttle::ThrottleComponent,
+            brake::BrakeComponent, orientation::OrientationComponent, position::PositionComponent,
+            speed::SpeedComponent, steering::SteeringComponent, throttle::ThrottleComponent,
         },
-        systems::{
-            movement::MovementSystem, rotation::RotationSystem, speed::SpeedSystem, system::System,
-        },
+        systems::{movement::MovementSystem, rotation::RotationSystem, speed::SpeedSystem},
     },
 };
 
