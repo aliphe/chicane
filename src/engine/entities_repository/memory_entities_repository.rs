@@ -36,8 +36,9 @@ impl<'a> EntitiesRepository<'a> for MemoryEntitiesRepository {
         };
     }
 
-    fn retrieve_entity_by_id(&self, entity_id: &String) -> Option<&Vec<Box<dyn Component>>> {
-        self.entities_components.get(entity_id)
+    fn retrieve_entity_by_id(&mut self, entity_id: &String) -> Option<Vec<Box<dyn Component>>> {
+        // self.entities_components.get(entity_id).as_deref()
+        todo!()
     }
 
     fn retrieve_entity_by_id_mut(
@@ -67,7 +68,7 @@ impl<'a> EntitiesRepository<'a> for MemoryEntitiesRepository {
     }
 
     fn retrieve_entity_component(
-        &self,
+        &mut self,
         entity_id: &String,
         component_type: &ComponentType,
     ) -> Option<&dyn Component> {

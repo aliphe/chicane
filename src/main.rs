@@ -2,19 +2,16 @@ extern crate redis;
 
 use std::f32::consts::PI;
 
-use engine::{component::Component, system::System};
+use engine::{
+    component::Component,
+    entities_repository::event_source_entities_repository::RedisStreamEventSourcing,
+};
 
 use crate::{
-    engine::entities_repository::{
-        entities_repository::EntitiesRepository,
-        memory_entities_repository::MemoryEntitiesRepository,
-    },
-    vehicle::{
-        components::{
-            brake::BrakeComponent, orientation::OrientationComponent, position::PositionComponent,
-            speed::SpeedComponent, steering::SteeringComponent, throttle::ThrottleComponent,
-        },
-        systems::{movement::MovementSystem, rotation::RotationSystem, speed::SpeedSystem},
+    engine::entities_repository::entities_repository::EntitiesRepository,
+    vehicle::components::{
+        brake::BrakeComponent, orientation::OrientationComponent, position::PositionComponent,
+        speed::SpeedComponent, steering::SteeringComponent, throttle::ThrottleComponent,
     },
 };
 
@@ -23,12 +20,12 @@ mod vehicle;
 
 fn main() {
     // Application-specific
-    let mut repository = MemoryEntitiesRepository::new();
+    let mut repository = RedisStreamEventSourcing::new();
 
-    // Systems
-    let movement_system = MovementSystem::new();
-    let rotation_system = RotationSystem::new();
-    let speed_system = SpeedSystem::new();
+    // // Systems
+    // let movement_system = MovementSystem::new();
+    // let rotation_system = RotationSystem::new();
+    // let speed_system = SpeedSystem::new();
 
     let mut components: Vec<Box<dyn Component>> = Vec::new();
     components.push(Box::new(OrientationComponent {
@@ -46,16 +43,16 @@ fn main() {
 
     repository.register_entity(String::from("car"), components);
 
-    let mut i = 0;
-    while i < 10 {
-        let tick = speed_system
-            .tick(&mut repository)
-            .and_then(|_| rotation_system.tick(&mut repository))
-            .and_then(|_| movement_system.tick(&mut repository));
+    // let mut i = 0;
+    // while i < 10 {
+    //     let tick = speed_system
+    //         .tick(&mut repository)
+    //         .and_then(|_| rotation_system.tick(&mut repository))
+    //         .and_then(|_| movement_system.tick(&mut repository));
 
-        if let Err(err) = tick {
-            println!("ERROR {}", err);
-        }
-        i += 1;
-    }
+    //     if let Err(err) = tick {
+    //         println!("ERROR {}", err);
+    //     }
+    //     i += 1;
+    // }
 }

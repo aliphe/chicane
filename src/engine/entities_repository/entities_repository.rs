@@ -3,7 +3,7 @@ use crate::engine::component::{Component, ComponentType};
 pub trait EntitiesRepository<'a> {
     fn register_entity(&mut self, entity_id: String, components: Vec<Box<dyn Component>>);
 
-    fn retrieve_entity_by_id(&self, entity_id: &String) -> Option<&Vec<Box<dyn Component>>>;
+    fn retrieve_entity_by_id(&mut self, entity_id: &String) -> Option<Vec<Box<dyn Component>>>;
     fn retrieve_entity_by_id_mut(
         &mut self,
         entity_id: &String,
@@ -12,7 +12,7 @@ pub trait EntitiesRepository<'a> {
     fn retrieve_entities_by_components(&self, components: &Vec<ComponentType>) -> Vec<String>;
 
     fn retrieve_entity_component(
-        &self,
+        &mut self,
         entity_id: &String,
         component_type: &ComponentType,
     ) -> Option<&dyn Component>;
